@@ -13,10 +13,29 @@ def main():
   
   running = True
 
+  # Temp
+  test_text = "Hello World"
+  current_index = 0
+  end_game = False
+  win = False
+
   while running:
     for event in pygame.event.get():
-      if (event.type == pygame.QUIT):
+      if event.type == pygame.QUIT:
         running = False
+      
+      if not end_game:
+        if event.type == pygame.KEYDOWN:
+          print("Key pressed:", event.unicode)
+          
+          if event.unicode == test_text[current_index]:
+            print("Key correct!")
+            current_index += 1
+
+            if current_index >= len(test_text):
+              print('You win!')
+              end_game = True
+              win = True
 
 if __name__ == "__main__":
   main()
