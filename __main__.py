@@ -4,6 +4,7 @@ import random
 import constants
 from sprites.textblock import TextBlock
 
+
 def main():
     # Initialize pygame
     pygame.init()
@@ -12,13 +13,15 @@ def main():
     pygame.display.set_caption(constants.APP_NAME)
 
     # Create screen display
-    screen = pygame.display.set_mode((constants.APP_WIDTH, constants.APP_HEIGHT))
+    screen = pygame.display.set_mode(
+        (constants.APP_WIDTH, constants.APP_HEIGHT))
 
     # Init font
     font = pygame.font.SysFont(constants.FONT_NAME, 20)
 
     # Background
-    background = pygame.surface.Surface((screen.get_width(), screen.get_height()))
+    background = pygame.surface.Surface(
+        (screen.get_width(), screen.get_height()))
     background.fill((11, 11, 11))
     screen.blit(background, (0, 0))
 
@@ -35,12 +38,12 @@ def main():
         all_texts = json.load(read_file)
 
     # Currents
-    current_text_index = int(random.random() * len(all_texts)) 
+    current_text_index = int(random.random() * len(all_texts))
     current_type_index = 0
 
     end_game = False
     win = False
-    
+
     # Sprite group
     all_group = pygame.sprite.Group()
 
@@ -48,8 +51,10 @@ def main():
     TextBlock.groups = all_group
 
     # Sprites
-    current_text = TextBlock(all_texts[current_text_index], pygame.rect.Rect(0, 0, constants.APP_WIDTH, 100), font, color=(255, 255, 255))
-    current_type_text = TextBlock("", pygame.rect.Rect(0, 0, constants.APP_WIDTH, 100), font, color=(100, 100, 100))
+    current_text = TextBlock(all_texts[current_text_index], pygame.rect.Rect(
+        0, 0, constants.APP_WIDTH, 100), font, color=(255, 255, 255))
+    current_type_text = TextBlock("", pygame.rect.Rect(
+        0, 0, constants.APP_WIDTH, 100), font, color=(100, 100, 100))
 
     while running:
         # Reference: http://thepythongamebook.com/en:pygame:step014
@@ -65,7 +70,7 @@ def main():
                     if event.unicode == all_texts[current_text_index][current_type_index]:
                         print(event.unicode)
                         current_type_index += 1
-                        
+
                         # Update current type text
                         current_type_text.text = all_texts[current_text_index][:current_type_index]
 
@@ -73,7 +78,7 @@ def main():
                             print('You win!')
                             end_game = True
                             win = True
-        
+
         # Clear, update and draw for all sprites
         all_group.clear(screen, background)
         all_group.update(ms)
@@ -81,6 +86,7 @@ def main():
 
         # Flip display
         pygame.display.flip()
+
 
 if __name__ == "__main__":
     main()
