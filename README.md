@@ -29,18 +29,18 @@ $ pipenv shell
 4. Once the shell is started, run `reqtexts.py` to retreive paragraphs to be typed.
 
 ```bash
-$ py reqtexts.py
+(supertyper-hash) $ py reqtexts.py
 ```
 
 5. Finally, run `__main__.py` to start game.
 
 ```bash
-$ py __main__.py
+(supertyper-hash) $ py __main__.py
 ```
 
 ## Development
 
-The project uses `pylint` to lint all files.
+The project uses `pylint` for linting and `autopep8` for formatting.
 
 ## License
 
