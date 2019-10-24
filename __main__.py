@@ -3,6 +3,7 @@ import json
 import random
 import constants
 from sprites.textblock import TextBlock
+from sprites.player import Player
 
 
 def main():
@@ -49,12 +50,14 @@ def main():
 
     # Assign sprites to group
     TextBlock.groups = all_group
+    Player.groups = all_group
 
     # Sprites
+    player = Player(pygame.rect.Rect(5, 5, 147, 177))
     current_text = TextBlock(all_texts[current_text_index], pygame.rect.Rect(
-        0, 0, constants.APP_WIDTH, 100), font, color=(255, 255, 255))
+        0, 100, constants.APP_WIDTH, 250), font, color=(255, 255, 255))
     current_type_text = TextBlock("", pygame.rect.Rect(
-        0, 0, constants.APP_WIDTH, 100), font, color=(100, 100, 100))
+        0, 100, constants.APP_WIDTH, 250), font, color=(100, 100, 100))
 
     while running:
         # Reference: http://thepythongamebook.com/en:pygame:step014
@@ -69,6 +72,7 @@ def main():
                     # Compare key press
                     if event.unicode == all_texts[current_text_index][current_type_index]:
                         print(event.unicode)
+                        player.attack()
                         current_type_index += 1
 
                         # Update current type text
