@@ -21,7 +21,7 @@ class TextBlock(pygame.sprite.Sprite):
         while cache_text:
             i = 1
 
-            if y > self.rect.bottom:
+            if y > self.rect.height:
                 break
 
             while self.font.size(cache_text[:i])[0] < self.rect.width and i < len(cache_text):
