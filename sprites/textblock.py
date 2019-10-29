@@ -14,6 +14,8 @@ class TextBlock(pygame.sprite.Sprite):
         self.bgcolor = bgcolor
 
     def update(self, ms):
+        self.image.fill((0, 0, 0))
+
         font_height = self.font.size('Bj')[1]
         cache_text = self.text
         y = self.rect.top
