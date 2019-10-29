@@ -67,9 +67,11 @@ def main():
         ms = clock.tick(fps)
 
         for event in pygame.event.get():
+            # If pygame quiting, terminate self
             if event.type == pygame.QUIT:
                 running = False
 
+            # Provide events for event group sprites to handle
             for sprite in event_group.sprites():
                 sprite.handle_event(event)
 

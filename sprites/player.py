@@ -4,8 +4,12 @@ import pygame
 # Sprite from https://www.gameart2d.com/the-knight-free-sprites.html
 class Player(pygame.sprite.Sprite):
     def __init__(self, rect):
+        # Init sprite groups
         super().__init__(self.groups)
+
+        # Define surface rect
         self.rect = rect
+
         # Current player state
         self.state = "idle"
         # Timer to slow down animation loop
@@ -25,12 +29,13 @@ class Player(pygame.sprite.Sprite):
             self.attack_frames.append(pygame.transform.scale(
                 pygame.image.load(f"images/player/Attack ({i + 1}).png"), rect.size))
 
+        # Render the image on first frame
         self._update_image()
 
     def update(self, ms):
         self.timer += ms
 
-        # Slow down image loop
+        # Slow down image loop, updates at every 100ms
         if self.timer > 100:
             self._update_image()
             self.timer = 0
@@ -40,6 +45,7 @@ class Player(pygame.sprite.Sprite):
 
     def _update_image(self):
         if self.state == "attack":
+            # Iterate through attack frames
             self.image = self.attack_frames[self.attack_index]
             self.attack_index = (self.attack_index +
                                  1) % len(self.attack_frames)
@@ -48,5 +54,6 @@ class Player(pygame.sprite.Sprite):
             if self.attack_index <= 0:
                 self.state = "idle"
         else:
+            # Iterate through idle frames
             self.image = self.idle_frames[self.idle_index]
             self.idle_index = (self.idle_index + 1) % len(self.idle_frames)
