@@ -4,6 +4,7 @@ import random
 import constants
 from sprites.textblock import TextBlock
 from sprites.player import Player
+from sprites.enemy import Enemy
 from sprites.button import Button
 
 
@@ -53,10 +54,12 @@ def main():
     # Assign sprites to group
     TextBlock.groups = all_group
     Player.groups = all_group
+    Enemy.groups = all_group
     Button.groups = all_group, event_group
 
     # Sprites
     player = Player(pygame.rect.Rect(5, 5, 147, 177))
+    enemy = Enemy(pygame.rect.Rect(300, 0, 200, 200))
     current_text = TextBlock(all_texts[current_text_index], pygame.rect.Rect(
         0, 100, constants.APP_WIDTH, 250), font, color=(255, 255, 255))
     current_type_text = TextBlock("", pygame.rect.Rect(
@@ -81,12 +84,14 @@ def main():
                     if event.unicode == all_texts[current_text_index][current_type_index]:
                         print(event.unicode)
                         player.attack()
+                        enemy.hurt()
                         current_type_index += 1
 
                         # Update current type text
                         current_type_text.text = all_texts[current_text_index][:current_type_index]
 
                         if current_type_index >= len(all_texts[current_text_index]):
+                            enemy.die()
                             print('You win!')
                             end_game = True
                             win = True
