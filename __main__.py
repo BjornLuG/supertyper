@@ -4,6 +4,7 @@ import random
 import constants
 from sprites.textblock import TextBlock
 from sprites.player import Player
+from sprites.button import Button
 
 
 def main():
@@ -47,10 +48,12 @@ def main():
 
     # Sprite group
     all_group = pygame.sprite.Group()
+    event_group = pygame.sprite.Group()
 
     # Assign sprites to group
     TextBlock.groups = all_group
     Player.groups = all_group
+    Button.groups = all_group, event_group
 
     # Sprites
     player = Player(pygame.rect.Rect(5, 5, 147, 177))
@@ -66,6 +69,9 @@ def main():
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 running = False
+
+            for sprite in event_group.sprites():
+                sprite.handle_event(event)
 
             if not end_game:
                 if event.type == pygame.KEYDOWN:
