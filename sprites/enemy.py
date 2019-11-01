@@ -2,11 +2,14 @@ import pygame
 
 # Sprite from https://craftpix.net/freebies/2d-game-troll-free-character-sprites/
 class Enemy(pygame.sprite.Sprite):
-    def __init__(self, rect):
+    def __init__(self, rect, health):
         super().__init__(self.groups)
         self.rect = rect
         self.state = "idle"
         self.timer = 0
+
+        self.health = health
+        self.current_health = health
 
         self.idle_index = 0
         self.idle_frames = []
@@ -40,6 +43,13 @@ class Enemy(pygame.sprite.Sprite):
     def hurt(self):
         self.state = "hurt"
     
+    def hurt_damage(self, damage):
+        self.current_health -= damage
+        print('Enemy health:', self.current_health)
+        
+        if self.current_health <= 0:
+            self.die()
+
     def die(self):
         self.isdead = True
 

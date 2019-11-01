@@ -3,7 +3,7 @@ import pygame
 
 # Sprite from https://www.gameart2d.com/the-knight-free-sprites.html
 class Player(pygame.sprite.Sprite):
-    def __init__(self, rect):
+    def __init__(self, rect, damage, extra_damage, attack_callback):
         # Init sprite groups
         super().__init__(self.groups)
 
@@ -14,6 +14,12 @@ class Player(pygame.sprite.Sprite):
         self.state = "idle"
         # Timer to slow down animation loop
         self.timer = 0
+        # Damage
+        self.damage = damage
+        self.extra_damage = extra_damage
+        self.attack_callback = attack_callback
+        # Current damage (plus extra damage)
+        self.current_damage = damage
 
         # Load idle frames
         self.idle_index = 0
@@ -43,6 +49,12 @@ class Player(pygame.sprite.Sprite):
     def attack(self):
         self.state = "attack"
 
+    def increase_damage(self):
+        self.current_damage += self.extra_damage
+
+    def reset_damage(self):
+        self.current_damage = self.damage
+
     def _update_image(self):
         if self.state == "attack":
             # Iterate through attack frames
@@ -50,8 +62,9 @@ class Player(pygame.sprite.Sprite):
             self.attack_index = (self.attack_index +
                                  1) % len(self.attack_frames)
 
-            # Once attack done, return to idle
+            # Once attack done, execute attack callback and return to idle 
             if self.attack_index <= 0:
+                self.attack_callback(self.current_damage)
                 self.state = "idle"
         else:
             # Iterate through idle frames

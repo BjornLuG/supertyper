@@ -44,6 +44,8 @@ def main():
     current_text_index = int(random.random() * len(all_texts))
     current_type_index = 0
 
+    correct_combo = 0
+
     end_game = False
     win = False
 
@@ -58,8 +60,8 @@ def main():
     Button.groups = all_group, event_group
 
     # Sprites
-    player = Player(pygame.rect.Rect(5, 5, 147, 177))
-    enemy = Enemy(pygame.rect.Rect(300, 0, 200, 200))
+    player = Player(pygame.rect.Rect(5, 5, 147, 177), 5, 5, lambda damage: enemy.hurt_damage(damage))
+    enemy = Enemy(pygame.rect.Rect(300, 0, 200, 200), 1000)
     current_text = TextBlock(all_texts[current_text_index], pygame.rect.Rect(
         0, 100, constants.APP_WIDTH, 250), font, color=(255, 255, 255))
     current_type_text = TextBlock("", pygame.rect.Rect(
@@ -83,6 +85,7 @@ def main():
                     # Compare key press
                     if event.unicode == all_texts[current_text_index][current_type_index]:
                         print(event.unicode)
+                        correct_combo += 1
                         player.attack()
                         enemy.hurt()
                         current_type_index += 1
@@ -90,11 +93,20 @@ def main():
                         # Update current type text
                         current_type_text.text = all_texts[current_text_index][:current_type_index]
 
-                        if current_type_index >= len(all_texts[current_text_index]):
-                            enemy.die()
+                        # Check enemy dead to end game
+                        if enemy.isdead:
+                            # enemy.die()
                             print('You win!')
                             end_game = True
                             win = True
+
+                        # If performs combo, add extra damage
+                        if correct_combo > 0:
+                            player.increase_damage()
+                    else:
+                        # Wrong key, reset combo and player damage
+                        correct_combo = 0
+                        player.reset_damage()
 
         # Clear, update and draw for all sprites
         all_group.clear(screen, background)
