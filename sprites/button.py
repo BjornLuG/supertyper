@@ -11,7 +11,10 @@ class Button(pygame.sprite.Sprite):
 
         # Set image surface and black color as transparent
         self.image = pygame.surface.Surface(rect.size)
-        self.image.set_colorkey((0, 0, 0))
+
+        # If bgcolor defined: set black as transparent by default
+        if bgcolor:
+            self.image.set_colorkey((0, 0, 0))
 
         self.font = font
         self.text = text
@@ -21,20 +24,15 @@ class Button(pygame.sprite.Sprite):
         self.bgcolor = bgcolor
 
     def update(self, ms):
-        # Clear blit
-        self.image.fill((0, 0, 0))
+        # Clear blit, use bgcolor if defined, else use the default black
+        self.image.fill(self.bgcolor if self.bgcolor else (0, 0, 0))
 
-        # Render font as text surface, if has bgcolor, set it as transparent
-        if self.bgcolor:
-            text_surface = self.font.render(
-                self.text, self.antialias, self.color, self.bgcolor)
-            text_surface.set_color_key(self.bgcolor)
-        else:
-            text_surface = self.font.render(
-                self.text, self.antialias, self.color)
+        # Render font as text surface
+        text_surface = self.font.render(self.text, self.antialias, self.color)
 
-        # Blit text surface to image
-        self.image.blit(text_surface, self.rect.topleft)
+        # Blit text surface to image and center it
+        self.image.blit(text_surface, (self.rect.centerx - text_surface.get_rect().centerx,
+                                       self.rect.centery - text_surface.get_rect().centery))
 
     def handle_event(self, event):
         # Mouse up and left click
