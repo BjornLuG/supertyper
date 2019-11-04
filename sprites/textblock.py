@@ -51,7 +51,7 @@ class TextBlock(pygame.sprite.Sprite):
             if self.bgcolor:
                 text_surface = self.font.render(
                     cache_text[:i], self.antialias, self.color, self.bgcolor)
-                text_surface.set_color_key(self.bgcolor)
+                text_surface.set_colorkey(self.bgcolor)
             else:
                 text_surface = self.font.render(
                     cache_text[:i], self.antialias, self.color)
