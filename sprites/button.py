@@ -31,8 +31,8 @@ class Button(pygame.sprite.Sprite):
         text_surface = self.font.render(self.text, self.antialias, self.color)
 
         # Blit text surface to image and center it
-        self.image.blit(text_surface, (self.rect.centerx - text_surface.get_rect().centerx,
-                                       self.rect.centery - text_surface.get_rect().centery))
+        self.image.blit(text_surface, ((self.rect.width - text_surface.get_rect().width) / 2,
+                                       (self.rect.height - text_surface.get_rect().height) / 2))
 
     def handle_event(self, event):
         # Mouse up and left click
