@@ -73,9 +73,17 @@ def main():
     keyletter = ['q', 'w', 'e', 'r', 't', 'y', 'u', 'i', 'o', 'p', 'a', 's', 'd','f', 'g', 'h', 'j', 'k', 'l', 'z', 'x', 'c', 'v', 'b', 'n','m']
     keyboardkeys = []
     lastpressedkey = ""
+    keyX = 5
+    keyY = 325
+    keywidth = 40
+    keyheight = 40
     for letter in keyletter:
-        keyboardkey = Keyboard(pygame.rect.Rect(5, 300, 50, 50), font, letter)
+        keyboardkey = Keyboard(pygame.rect.Rect(keyX, keyY, keywidth, keyheight), font, letter)
         keyboardkeys.append(keyboardkey)
+        keyX += keywidth
+        if keyX == 365:
+            keyX = 5
+            keyY += 40
 
     while running:
         # Reference: http://thepythongamebook.com/en:pygame:step014
