@@ -35,6 +35,11 @@ def main():
     running = True
     clock = pygame.time.Clock()
     fps = constants.FPS
+    
+    # Clock to keep track key press interval
+    key_press_clock = pygame.time.Clock()
+    # Max interval between key press, else reset damage
+    max_press_interval = 500
 
     # Load texts
     texts_file = "texts.json"
@@ -136,8 +141,12 @@ def main():
                             win = True
 
                         # If performs combo, add extra damage
-                        if correct_combo > 0:
+                        if correct_combo > 0 and key_press_clock.tick() <= max_press_interval:
                             player.increase_damage()
+                        else:
+                            # Took too long, reset
+                            correct_combo = 0
+                            player.reset_damage()
                     else:
                         # Wrong key, reset combo and player damage
                         correct_combo = 0
