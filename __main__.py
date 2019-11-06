@@ -81,9 +81,12 @@ def main():
         keyboardkey = Keyboard(pygame.rect.Rect(keyX, keyY, keywidth, keyheight), font, letter)
         keyboardkeys.append(keyboardkey)
         keyX += keywidth
-        if keyX == 365:
+        if keyletter.index(letter) == 9:
             keyX = 5
-            keyY += 40
+            keyY += keyheight
+        elif keyletter.index(letter) == 18:
+            keyX = 5
+            keyY += keyheight
 
     while running:
         # Reference: http://thepythongamebook.com/en:pygame:step014
