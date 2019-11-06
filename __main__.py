@@ -72,7 +72,7 @@ def main():
 
     keyletter = ['q', 'w', 'e', 'r', 't', 'y', 'u', 'i', 'o', 'p', 'a', 's', 'd','f', 'g', 'h', 'j', 'k', 'l', 'z', 'x', 'c', 'v', 'b', 'n','m']
     keyboardkeys = []
-    lastpressedkey = ""
+    lastpressedkey = []
     keyX = 5
     keyY = 325
     keywidth = 40
@@ -103,9 +103,9 @@ def main():
 
             if not end_game:
                 if event.type == pygame.KEYDOWN:
-                    if event.unicode in keyletter:
-                        keyboardkeys[keyletter.index(event.unicode)].bgcolor = (255, 0, 0)
-                        lastpressedkey = event.unicode
+                    if event.unicode.lower() in keyletter:
+                        keyboardkeys[keyletter.index(event.unicode.lower())].bgcolor = (255, 0, 0)
+                        lastpressedkey.append(event.unicode.lower())
 
                     # Compare key press
                     if event.unicode == all_texts[current_text_index][current_type_index]:
@@ -134,8 +134,9 @@ def main():
                         player.reset_damage()
                     
                 elif event.type == pygame.KEYUP:
-                    if lastpressedkey in keyletter:
-                        keyboardkeys[keyletter.index(lastpressedkey)].bgcolor = (0, 0, 255)
+                    for i in lastpressedkey:
+                        if i in keyletter:
+                            keyboardkeys[keyletter.index(i)].bgcolor = (0, 0, 255)
 
         # Clear, update and draw for all sprites
         all_group.clear(screen, background)
