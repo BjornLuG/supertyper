@@ -6,6 +6,7 @@ from sprites.textblock import TextBlock
 from sprites.player import Player
 from sprites.enemy import Enemy
 from sprites.button import Button
+from sprites.keyboard import Keyboard
 
 
 def main():
@@ -58,6 +59,7 @@ def main():
     Player.groups = all_group
     Enemy.groups = all_group
     Button.groups = all_group, event_group
+    Keyboard.groups = all_group
 
     # Sprites
     player = Player(pygame.rect.Rect(5, 5, 147, 177), 5, 5, lambda damage: enemy.hurt_damage(damage))
@@ -66,6 +68,13 @@ def main():
         0, 100, constants.APP_WIDTH, 250), font, color=(255, 255, 255))
     current_type_text = TextBlock("", pygame.rect.Rect(
         0, 100, constants.APP_WIDTH, 250), font, color=(100, 100, 100))
+
+    keyletter = ['q', 'w', 'e', 'r', 't', 'y', 'u', 'i', 'o', 'p', 'a', 's', 'd','f', 'g', 'h', 'j', 'k', 'l', 'z', 'x', 'c', 'v', 'b', 'n','m']
+    keyboardkeys = []
+    lastpressedkey = ""
+    for letter in keyletter:
+        keyboardkey = Keyboard(pygame.rect.Rect(5, 300, 50, 50), font, letter)
+        keyboardkeys.append(keyboardkey)
 
     while running:
         # Reference: http://thepythongamebook.com/en:pygame:step014
@@ -82,6 +91,10 @@ def main():
 
             if not end_game:
                 if event.type == pygame.KEYDOWN:
+                    if event.unicode in keyletter:
+                        keyboardkeys[keyletter.index(event.unicode)].bgcolor = (255, 0, 0)
+                        lastpressedkey = event.unicode
+
                     # Compare key press
                     if event.unicode == all_texts[current_text_index][current_type_index]:
                         print(event.unicode)
@@ -107,6 +120,10 @@ def main():
                         # Wrong key, reset combo and player damage
                         correct_combo = 0
                         player.reset_damage()
+                    
+                elif event.type == pygame.KEYUP:
+                    if lastpressedkey in keyletter:
+                        keyboardkeys[keyletter.index(lastpressedkey)].bgcolor = (0, 0, 255)
 
         # Clear, update and draw for all sprites
         all_group.clear(screen, background)
