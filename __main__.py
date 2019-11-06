@@ -8,6 +8,7 @@ from sprites.player import Player
 from sprites.enemy import Enemy
 from sprites.button import Button
 from sprites.keyboard import Keyboard
+from sprites.bar import Bar
 
 
 def main():
@@ -51,6 +52,8 @@ def main():
     end_game = False
     win = False
 
+    enemy_hp = 1000
+
     # Sprite group
     all_group = pygame.sprite.Group()
     event_group = pygame.sprite.Group()
@@ -62,11 +65,15 @@ def main():
     Enemy.groups = all_group
     Button.groups = all_group, event_group
     Keyboard.groups = all_group
+    Bar.groups = all_group
 
     # Sprites
     player = Player(pygame.rect.Rect(5, 5, 147, 177), 5, 5,
                     lambda damage: enemy.hurt_damage(damage))
-    enemy = Enemy(pygame.rect.Rect(300, 0, 200, 200), 1000)
+
+    enemy = Enemy(pygame.rect.Rect(300, 0, 200, 200), enemy_hp)
+    enemy_hp_bar = Bar(pygame.rect.Rect(340, 40, 120, 5), 1, (200, 0, 0), (88, 88, 88))
+
     current_text = TextType(all_texts[current_text_index], pygame.rect.Rect(
         0, 100, constants.APP_WIDTH, 250), font, color_normal=(255, 255, 255), color_active=(100, 100, 100))
 
@@ -117,6 +124,9 @@ def main():
 
                         # Update current type text
                         current_text.type_index = current_type_index
+
+                        # Update enemy hp bar
+                        enemy_hp_bar.value = enemy.current_health / enemy.health
 
                         # Check enemy dead to end game
                         if enemy.isdead:
