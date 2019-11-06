@@ -3,6 +3,7 @@ import json
 import random
 import constants
 from sprites.textblock import TextBlock
+from sprites.texttype import TextType
 from sprites.player import Player
 from sprites.enemy import Enemy
 from sprites.button import Button
@@ -56,18 +57,18 @@ def main():
 
     # Assign sprites to group
     TextBlock.groups = all_group
+    TextType.groups = all_group
     Player.groups = all_group
     Enemy.groups = all_group
     Button.groups = all_group, event_group
     Keyboard.groups = all_group
 
     # Sprites
-    player = Player(pygame.rect.Rect(5, 5, 147, 177), 5, 5, lambda damage: enemy.hurt_damage(damage))
+    player = Player(pygame.rect.Rect(5, 5, 147, 177), 5, 5,
+                    lambda damage: enemy.hurt_damage(damage))
     enemy = Enemy(pygame.rect.Rect(300, 0, 200, 200), 1000)
-    current_text = TextBlock(all_texts[current_text_index], pygame.rect.Rect(
-        0, 100, constants.APP_WIDTH, 250), font, color=(255, 255, 255))
-    current_type_text = TextBlock("", pygame.rect.Rect(
-        0, 100, constants.APP_WIDTH, 250), font, color=(100, 100, 100))
+    current_text = TextType(all_texts[current_text_index], pygame.rect.Rect(
+        0, 100, constants.APP_WIDTH, 250), font, color_normal=(255, 255, 255), color_active=(100, 100, 100))
 
     keyletter = ['q', 'w', 'e', 'r', 't', 'y', 'u', 'i', 'o', 'p', 'a', 's', 'd','f', 'g', 'h', 'j', 'k', 'l', 'z', 'x', 'c', 'v', 'b', 'n','m']
     keyboardkeys = []
@@ -104,7 +105,7 @@ def main():
                         current_type_index += 1
 
                         # Update current type text
-                        current_type_text.text = all_texts[current_text_index][:current_type_index]
+                        current_text.type_index = current_type_index
 
                         # Check enemy dead to end game
                         if enemy.isdead:
