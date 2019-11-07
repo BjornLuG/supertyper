@@ -3,7 +3,7 @@ import pygame
 
 # Sprite from https://www.gameart2d.com/the-knight-free-sprites.html
 class Player(pygame.sprite.Sprite):
-    def __init__(self, rect, damage, extra_damage, attack_callback):
+    def __init__(self, rect, damage, extra_damage):
         # Init sprite groups
         super().__init__(self.groups)
 
@@ -17,7 +17,7 @@ class Player(pygame.sprite.Sprite):
         # Damage
         self.damage = damage
         self.extra_damage = extra_damage
-        self.attack_callback = attack_callback
+        self.attack_callback = lambda damage: None
         # Current damage (plus extra damage)
         self.current_damage = damage
 

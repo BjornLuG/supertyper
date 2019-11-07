@@ -73,8 +73,7 @@ def main():
     Bar.groups = all_group
 
     # Sprites
-    player = Player(pygame.rect.Rect(5, 5, 147, 177), 5, 5,
-                    lambda damage: enemy.hurt_damage(damage))
+    player = Player(pygame.rect.Rect(5, 5, 147, 177), 5, 5)
 
     enemy = Enemy(pygame.rect.Rect(300, 0, 200, 200), enemy_hp)
     enemy_hp_bar = Bar(pygame.rect.Rect(340, 40, 120, 5), 1, (200, 0, 0), (88, 88, 88))
@@ -100,7 +99,23 @@ def main():
             keyX = 5
             keyY += keyheight
 
+    # Setup player attack (Called on every attack animation)
+    def player_attack(damage):
+        # Damage
+        enemy.hurt_damage(damage)
+        # Update enemy hp bar
+        enemy_hp_bar.value = enemy.current_health / enemy.health
+
+    player.attack_callback = player_attack
+
     while running:
+        # Check enemy dead to end game
+        if not end_game and enemy.isdead:
+            # enemy.die()
+            print('You win!')
+            end_game = True
+            win = True
+
         # Reference: http://thepythongamebook.com/en:pygame:step014
         ms = clock.tick(fps)
 
@@ -129,16 +144,6 @@ def main():
 
                         # Update current type text
                         current_text.type_index = current_type_index
-
-                        # Update enemy hp bar
-                        enemy_hp_bar.value = enemy.current_health / enemy.health
-
-                        # Check enemy dead to end game
-                        if enemy.isdead:
-                            # enemy.die()
-                            print('You win!')
-                            end_game = True
-                            win = True
 
                         # If performs combo, add extra damage
                         if correct_combo > 0 and key_press_clock.tick() <= max_press_interval:
