@@ -156,6 +156,7 @@ def main():
                     for i in lastpressedkey:
                         if i in keyletter:
                             keyboardkeys[keyletter.index(i)].bgcolor = (0, 0, 255)
+                    lastpressedkey = []
 
         # Clear, update and draw for all sprites
         all_group.clear(screen, background)
