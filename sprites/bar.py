@@ -19,6 +19,8 @@ class Bar(pygame.sprite.Sprite):
     def update(self, ms):
         self.image.fill(self.bgcolor)
 
-        if self.value > 0:
+        width = round(self.rect.width * self.value)
+
+        if width > 0:
             pygame.draw.rect(self.image, self.color, pygame.rect.Rect(
-                0, 0, self.rect.width * self.value, self.rect.height))
+                0, 0, width, self.rect.height))
