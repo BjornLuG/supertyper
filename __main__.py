@@ -74,7 +74,7 @@ def main():
     Bar.groups = all_group
 
     # Sprites
-    player = Player(pygame.rect.Rect(5, 5, 147, 177), 5, 5)
+    player = Player(pygame.rect.Rect(5, 5, 147, 177), 5, 5, 50)
 
     enemy = Enemy(pygame.rect.Rect(300, 0, 200, 200), enemy_hp)
 

@@ -3,7 +3,7 @@ import pygame
 
 # Sprite from https://www.gameart2d.com/the-knight-free-sprites.html
 class Player(pygame.sprite.Sprite):
-    def __init__(self, rect, damage, extra_damage):
+    def __init__(self, rect, damage, extra_damage, max_extra_damage):
         # Init sprite groups
         super().__init__(self.groups)
 
@@ -17,6 +17,7 @@ class Player(pygame.sprite.Sprite):
         # Damage
         self.damage = damage
         self.extra_damage = extra_damage
+        self.max_extra_damage = max_extra_damage
         self.attack_callback = lambda damage: None
         # Current damage (plus extra damage)
         self.current_damage = damage
@@ -50,7 +51,7 @@ class Player(pygame.sprite.Sprite):
         self.state = "attack"
 
     def increase_damage(self):
-        self.current_damage += self.extra_damage
+        self.current_damage = min(self.current_damage + self.extra_damage, self.max_extra_damage)
 
     def reset_damage(self):
         self.current_damage = self.damage
