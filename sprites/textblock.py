@@ -28,7 +28,7 @@ class TextBlock(pygame.sprite.Sprite):
         # Copy text, will be sliced later
         cache_text = self.text
         # Current line y position
-        y = self.rect.top
+        y = 0
 
         # The following algorithm will go line by line to render
         # the possible texts of each line, producing a truncate effect
@@ -47,17 +47,12 @@ class TextBlock(pygame.sprite.Sprite):
             if i < len(cache_text):
                 i = cache_text.rfind(" ", 0, i) + 1
 
-            # Render font as text surface, if has bgcolor, set it as transparent
-            if self.bgcolor:
-                text_surface = self.font.render(
-                    cache_text[:i], self.antialias, self.color, self.bgcolor)
-                text_surface.set_colorkey(self.bgcolor)
-            else:
-                text_surface = self.font.render(
-                    cache_text[:i], self.antialias, self.color)
+            # Render font as text surface
+            text_surface = self.font.render(
+                cache_text[:i], self.antialias, self.color, self.bgcolor)
 
             # Blit text surface to image
-            self.image.blit(text_surface, (self.rect.left, y))
+            self.image.blit(text_surface, (0, y))
 
             # Increment y to go to next line
             y += font_height

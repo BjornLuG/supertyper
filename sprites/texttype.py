@@ -29,7 +29,7 @@ class TextType(pygame.sprite.Sprite):
         # Copy text, will be sliced later
         cache_text = self.text
         # Current line y position
-        y = self.rect.top
+        y = 0
         current_index = 0
 
         # The following algorithm will go line by line to render
@@ -55,7 +55,7 @@ class TextType(pygame.sprite.Sprite):
                     cache_text[:i], self.antialias, self.color_normal)
 
                 # Blit text surface to image
-                self.image.blit(text_surface, (self.rect.left, y))
+                self.image.blit(text_surface, (0, y))
 
             elif current_index + i <= self.type_index:
                 # Current line is less than type index, all use color_active
@@ -63,7 +63,7 @@ class TextType(pygame.sprite.Sprite):
                     cache_text[:i], self.antialias, self.color_active)
 
                 # Blit text surface to image
-                self.image.blit(text_surface, (self.rect.left, y))
+                self.image.blit(text_surface, (0, y))
 
             else:
                 # Current line has two different colors, render both
@@ -75,9 +75,9 @@ class TextType(pygame.sprite.Sprite):
                     cache_text[relative_index:i], self.antialias, self.color_normal)
 
                 # Blit text surface to image (each for left and right)
-                self.image.blit(text_surface_left, (self.rect.left, y))
+                self.image.blit(text_surface_left, (0, y))
                 self.image.blit(
-                    text_surface_right, (self.rect.left + text_surface_left.get_rect().width, y))
+                    text_surface_right, (text_surface_left.get_rect().width, y))
 
             # Increment y to go to next line
             y += font_height
