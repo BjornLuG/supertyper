@@ -24,6 +24,7 @@ def main():
 
     # Init font
     font = pygame.font.SysFont(constants.FONT_NAME, 20)
+    font_small = pygame.font.SysFont(constants.FONT_NAME, 12)
 
     # Background
     background = pygame.surface.Surface(
@@ -35,7 +36,7 @@ def main():
     running = True
     clock = pygame.time.Clock()
     fps = constants.FPS
-    
+
     # Clock to keep track key press interval
     key_press_clock = pygame.time.Clock()
     # Max interval between key press, else reset damage
@@ -76,12 +77,29 @@ def main():
     player = Player(pygame.rect.Rect(5, 5, 147, 177), 5, 5)
 
     enemy = Enemy(pygame.rect.Rect(300, 0, 200, 200), enemy_hp)
-    enemy_hp_bar = Bar(pygame.rect.Rect(340, 40, 120, 5), 1, (200, 0, 0), (88, 88, 88))
 
-    current_text = TextType(all_texts[current_text_index], pygame.rect.Rect(
-        0, 100, constants.APP_WIDTH, 250), font, color_normal=(255, 255, 255), color_active=(100, 100, 100))
+    enemy_hp_bar = Bar(
+        pygame.rect.Rect(10, 180, constants.APP_WIDTH - 20, 18),
+        1,
+        (200, 0, 0),
+        (88, 88, 88)
+    )
 
-    keyletter = ['q', 'w', 'e', 'r', 't', 'y', 'u', 'i', 'o', 'p', 'a', 's', 'd','f', 'g', 'h', 'j', 'k', 'l', 'z', 'x', 'c', 'v', 'b', 'n','m']
+    TextBlock(
+        "Enemy health",
+        pygame.rect.Rect((constants.APP_WIDTH - 80) / 2, 180, 80, 100),
+        font_small
+    )
+
+    current_text = TextType(
+        all_texts[current_text_index],
+        pygame.rect.Rect(5, 200, constants.APP_WIDTH - 10, 250),
+        font,
+        color_normal=(255, 255, 255),
+        color_active=(100, 100, 100)
+    )
+
+    keyletter = ["q", "w", "e", "r", "t", "y", "u", "i", "o", "p", "a", "s", "d", "f", "g", "h", "j", "k", "l", "z", "x", "c", "v", "b", "n", "m"]
     keyboardkeys = []
     lastpressedkey = []
     keyX = 5
@@ -112,7 +130,7 @@ def main():
         # Check enemy dead to end game
         if not end_game and enemy.isdead:
             # enemy.die()
-            print('You win!')
+            print("You win!")
             end_game = True
             win = True
 
@@ -156,7 +174,7 @@ def main():
                         # Wrong key, reset combo and player damage
                         correct_combo = 0
                         player.reset_damage()
-                    
+
                 elif event.type == pygame.KEYUP:
                     for i in lastpressedkey:
                         if i in keyletter:
