@@ -43,14 +43,10 @@ def main():
     max_press_interval = 500
 
     # Load texts
-    texts_file = "texts.json"
-    all_texts = []
-
-    with open(texts_file) as read_file:
-        all_texts = json.load(read_file)
+    all_texts = get_all_texts()
 
     # Currents
-    current_text_index = int(random.random() * len(all_texts))
+    current_text = all_texts.pop(int(random.random() * len(all_texts)))
     current_type_index = 0
 
     correct_combo = 0
@@ -91,8 +87,8 @@ def main():
         font_small
     )
 
-    current_text = TextType(
-        all_texts[current_text_index],
+    current_text_type = TextType(
+        current_text,
         pygame.rect.Rect(5, 200, constants.APP_WIDTH - 10, 250),
         font,
         color_normal=(255, 255, 255),
@@ -153,7 +149,7 @@ def main():
                         lastpressedkey.append(event.unicode.lower())
 
                     # Compare key press
-                    if event.unicode == all_texts[current_text_index][current_type_index]:
+                    if event.unicode == current_text[current_type_index]:
                         print(event.unicode)
                         correct_combo += 1
                         player.attack()
@@ -161,7 +157,11 @@ def main():
                         current_type_index += 1
 
                         # Update current type text
-                        current_text.type_index = current_type_index
+                        current_text_type.type_index = current_type_index
+
+                        if current_type_index >= len(current_text):
+                            current_text_type.text = current_text = all_texts.pop(int(random.random() * len(all_texts)))
+                            current_text_type.type_index = current_type_index = 0
 
                         # If performs combo, add extra damage
                         if correct_combo > 0 and key_press_clock.tick() <= max_press_interval:
@@ -189,6 +189,10 @@ def main():
         # Flip display
         pygame.display.flip()
 
+
+def get_all_texts():
+    with open("texts.json") as read_file:
+        return json.load(read_file)
 
 if __name__ == "__main__":
     main()
