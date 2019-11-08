@@ -149,7 +149,7 @@ def main():
             if not end_game:
                 if event.type == pygame.KEYDOWN:
                     if event.unicode.lower() in keyletter:
-                        keyboardkeys[keyletter.index(event.unicode.lower())].bgcolor = (255, 0, 0)
+                        keyboardkeys[keyletter.index(event.unicode.lower())].bgcolor = (211, 211, 211)
                         lastpressedkey.append(event.unicode.lower())
 
                     # Compare key press
@@ -178,7 +178,7 @@ def main():
                 elif event.type == pygame.KEYUP:
                     for i in lastpressedkey:
                         if i in keyletter:
-                            keyboardkeys[keyletter.index(i)].bgcolor = (0, 0, 255)
+                            keyboardkeys[keyletter.index(i)].bgcolor = (128, 128, 128)
                     lastpressedkey = []
 
         # Clear, update and draw for all sprites

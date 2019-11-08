@@ -2,7 +2,7 @@ import pygame
 
 class Keyboard(pygame.sprite.Sprite):
     
-    def __init__(self, rect, font, text, antialias = False, color = (0, 0,0), bgcolor = (0, 0, 255)):
+    def __init__(self, rect, font, text, antialias = False, color = (0, 0,0), bgcolor = (128, 128, 128)):
         super().__init__(self.groups)
 
         self.rect = rect
