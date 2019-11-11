@@ -52,6 +52,7 @@ def main():
 
     correct_combo = 0
 
+    start_game = False
     end_game = False
 
     enemy_hp = 1000
@@ -88,28 +89,56 @@ def main():
     )
 
     end_game_text = TextBlock(
-        "Game over!",
+        "Supertyper",
         pygame.rect.Rect((constants.APP_WIDTH - 200) / 2, 40, 200, 100),
         font_large,
         TextPosition.CENTER
     )
 
     final_score_text = TextBlock(
-        "Your time: -1s",
+        "Type as fast as you can",
         pygame.rect.Rect((constants.APP_WIDTH - 200) / 2, 75, 200, 100),
         font,
         TextPosition.CENTER
     )
+
+    def restart_game():
+        nonlocal start_game
+        nonlocal end_game
+        nonlocal current_text
+        nonlocal current_type_index
+        nonlocal correct_combo
+
+        # Load texts
+        all_texts = get_all_texts()
+
+        # Currents
+        current_text = all_texts.pop(int(random.random() * len(all_texts)))
+        current_type_index = 0
+
+        correct_combo = 0
+
+        current_text_type.text = current_text
+        current_text_type.type_index = 0
     
-    def start_game():
-        # TODO: Add game start logic
-        print("Game started")
+        # Reset enemy health
+        enemy.current_health = enemy_hp
+        enemy.isdead = False
+
+        # Hide GUI
+        end_game_text.hidden = True
+        final_score_text.hidden = True
+        start_btn.hidden = True
+
+        # Start game
+        start_game = True
+        end_game = False
 
     start_btn = Button(
         pygame.rect.Rect((constants.APP_WIDTH - 100) / 2, 105, 100, 30),
         font,
         "Start",
-        start_game,
+        restart_game,
         bgcolor=(88, 88, 88)
     )
 
@@ -153,6 +182,12 @@ def main():
         if not end_game and enemy.isdead:
             print("You win!")
             end_game = True
+            end_game_text.text = "Game over!"
+            end_game_text.hidden = False
+            final_score_text.text = "Your time:"
+            final_score_text.hidden = False
+            start_btn.text = "Retry"
+            start_btn.hidden = False
 
         # Reference: http://thepythongamebook.com/en:pygame:step014
         ms = clock.tick(fps)
@@ -166,7 +201,7 @@ def main():
             for sprite in event_group.sprites():
                 sprite.handle_event(event)
 
-            if not end_game:
+            if start_game and not end_game:
                 if event.type == pygame.KEYDOWN:
                     if event.unicode.lower() in keyletter:
                         keyboardkeys[keyletter.index(event.unicode.lower())].bgcolor = (211, 211, 211)
@@ -217,6 +252,7 @@ def main():
 def get_all_texts():
     with open("texts.json") as read_file:
         return json.load(read_file)
+
 
 if __name__ == "__main__":
     main()
