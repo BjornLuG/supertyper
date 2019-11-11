@@ -37,6 +37,7 @@ def main():
     running = True
     clock = pygame.time.Clock()
     fps = constants.FPS
+    timer = 0
 
     # Clock to keep track key press interval
     key_press_clock = pygame.time.Clock()
@@ -102,13 +103,20 @@ def main():
         TextPosition.CENTER
     )
 
+    timer_text = TextBlock(
+        timer,
+        pygame.rect.Rect((constants.APP_WIDTH - 400)/ 2, 0, 400, 200),
+        font_large,
+        TextPosition.CENTER
+    )
+
     def restart_game():
         nonlocal start_game
         nonlocal end_game
         nonlocal current_text
         nonlocal current_type_index
         nonlocal correct_combo
-
+        nonlocal timer
         # Load texts
         all_texts = get_all_texts()
 
@@ -124,6 +132,10 @@ def main():
         # Reset enemy health
         enemy.current_health = enemy_hp
         enemy.isdead = False
+        enemy_hp_bar.value = 1
+
+        timer = 0
+        timer_text.text = 0
 
         # Hide GUI
         end_game_text.hidden = True
@@ -184,13 +196,16 @@ def main():
             end_game = True
             end_game_text.text = "Game over!"
             end_game_text.hidden = False
-            final_score_text.text = "Your time:"
+            final_score_text.text = "Your time: " + str(round(timer, 3)) + "s"
             final_score_text.hidden = False
             start_btn.text = "Retry"
             start_btn.hidden = False
 
         # Reference: http://thepythongamebook.com/en:pygame:step014
         ms = clock.tick(fps)
+        if start_game and not end_game:
+            timer += ms/1000
+            timer_text.text = round(timer, 3)
 
         for event in pygame.event.get():
             # If pygame quiting, terminate self
