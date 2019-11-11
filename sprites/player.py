@@ -19,8 +19,8 @@ class Player(pygame.sprite.Sprite):
         self.extra_damage = extra_damage
         self.max_extra_damage = max_extra_damage
         self.attack_callback = lambda damage: None
-        # Current damage (plus extra damage)
-        self.current_damage = damage
+        # Current extra damage
+        self.current_extra_damage = 0
 
         # Load idle frames
         self.idle_index = 0
@@ -51,7 +51,7 @@ class Player(pygame.sprite.Sprite):
         self.state = "attack"
 
     def increase_damage(self):
-        self.current_damage = min(self.current_damage + self.extra_damage, self.max_extra_damage)
+        self.current_extra_damage = min(self.current_extra_damage + self.extra_damage, self.max_extra_damage)
 
     def reset_damage(self):
         self.current_damage = self.damage
@@ -60,12 +60,12 @@ class Player(pygame.sprite.Sprite):
         if self.state == "attack":
             # Iterate through attack frames
             self.image = self.attack_frames[self.attack_index]
-            self.attack_index = (self.attack_index +
-                                 1) % len(self.attack_frames)
+            self.attack_index = (self.attack_index + 1) % len(self.attack_frames)
 
             # Once attack done, execute attack callback and return to idle 
             if self.attack_index <= 0:
-                self.attack_callback(self.current_damage)
+                # Send attack callback
+                self.attack_callback(self.damage + self.current_extra_damage)
                 self.state = "idle"
         else:
             # Iterate through idle frames
