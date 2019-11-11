@@ -23,7 +23,14 @@ class Button(pygame.sprite.Sprite):
         self.color = color
         self.bgcolor = bgcolor
 
+        # Allow hiding
+        self.hidden = False
+
     def update(self, ms):
+        self.image.fill((0, 0, 0))
+        if self.hidden:
+            return
+
         # Clear blit, use bgcolor if defined, else use the default black
         self.image.fill(self.bgcolor if self.bgcolor else (0, 0, 0))
 

@@ -25,7 +25,14 @@ class TextBlock(pygame.sprite.Sprite):
         self.color = color
         self.bgcolor = bgcolor
 
+        # Allow hiding
+        self.hidden = False
+
     def update(self, ms):
+        if self.hidden:
+            self.image.fill((0, 0, 0))
+            return
+
         # Clear blit
         self.image.fill((0, 0, 0))
 
