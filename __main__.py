@@ -2,7 +2,7 @@ import pygame
 import json
 import random
 import constants
-from sprites.textblock import TextBlock
+from sprites.textblock import TextBlock, TextPosition
 from sprites.texttype import TextType
 from sprites.player import Player
 from sprites.enemy import Enemy
@@ -25,6 +25,7 @@ def main():
     # Init font
     font = pygame.font.SysFont(constants.FONT_NAME, 20)
     font_small = pygame.font.SysFont(constants.FONT_NAME, 12)
+    font_large = pygame.font.SysFont(constants.FONT_NAME, 30, 1)
 
     # Background
     background = pygame.surface.Surface(
@@ -52,7 +53,6 @@ def main():
     correct_combo = 0
 
     end_game = False
-    win = False
 
     enemy_hp = 1000
 
@@ -85,6 +85,32 @@ def main():
         "Enemy health",
         pygame.rect.Rect((constants.APP_WIDTH - 80) / 2, 180, 80, 100),
         font_small
+    )
+
+    end_game_text = TextBlock(
+        "Game over!",
+        pygame.rect.Rect((constants.APP_WIDTH - 200) / 2, 40, 200, 100),
+        font_large,
+        TextPosition.CENTER
+    )
+
+    final_score_text = TextBlock(
+        "Your time: -1s",
+        pygame.rect.Rect((constants.APP_WIDTH - 200) / 2, 75, 200, 100),
+        font,
+        TextPosition.CENTER
+    )
+    
+    def start_game():
+        # TODO: Add game start logic
+        print("Game started")
+
+    start_btn = Button(
+        pygame.rect.Rect((constants.APP_WIDTH - 100) / 2, 105, 100, 30),
+        font,
+        "Start",
+        start_game,
+        bgcolor=(88, 88, 88)
     )
 
     current_text_type = TextType(
@@ -125,10 +151,8 @@ def main():
     while running:
         # Check enemy dead to end game
         if not end_game and enemy.isdead:
-            # enemy.die()
             print("You win!")
             end_game = True
-            win = True
 
         # Reference: http://thepythongamebook.com/en:pygame:step014
         ms = clock.tick(fps)
