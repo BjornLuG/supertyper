@@ -165,7 +165,7 @@ def main():
     keyletter = ["q", "w", "e", "r", "t", "y", "u", "i", "o", "p", "a", "s", "d", "f", "g", "h", "j", "k", "l", "z", "x", "c", "v", "b", "n", "m"]
     keyboardkeys = []
     lastpressedkey = []
-    keyX = 5
+    keyX = 45
     keyY = 325
     keywidth = 40
     keyheight = 40
@@ -174,10 +174,10 @@ def main():
         keyboardkeys.append(keyboardkey)
         keyX += keywidth
         if keyletter.index(letter) == 9:
-            keyX = 5
+            keyX = 60
             keyY += keyheight
         elif keyletter.index(letter) == 18:
-            keyX = 5
+            keyX = 75
             keyY += keyheight
 
     # Setup player attack (Called on every attack animation)
