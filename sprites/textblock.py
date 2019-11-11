@@ -1,8 +1,13 @@
 import pygame
 
 
+class TextPosition:
+    LEFT = 1
+    RIGHT = 2
+    CENTER = 4
+
 class TextBlock(pygame.sprite.Sprite):
-    def __init__(self, text, rect, font, antialias=False, color=(255, 255, 255), bgcolor=None):
+    def __init__(self, text, rect, font, position=TextPosition.LEFT, antialias=False, color=(255, 255, 255), bgcolor=None):
         # Init sprite groups
         super().__init__(self.groups)
 
@@ -15,6 +20,7 @@ class TextBlock(pygame.sprite.Sprite):
 
         self.text = text
         self.font = font
+        self.position = position
         self.antialias = antialias
         self.color = color
         self.bgcolor = bgcolor
@@ -52,7 +58,14 @@ class TextBlock(pygame.sprite.Sprite):
                 cache_text[:i], self.antialias, self.color, self.bgcolor)
 
             # Blit text surface to image
-            self.image.blit(text_surface, (0, y))
+            if self.position == TextPosition.LEFT:
+                x = 0
+            elif self.position == TextPosition.RIGHT:
+                x = self.rect.width - text_surface.get_rect().width
+            else:
+                x = (self.rect.width - text_surface.get_rect().width) / 2
+
+            self.image.blit(text_surface, (x, y))
 
             # Increment y to go to next line
             y += font_height
