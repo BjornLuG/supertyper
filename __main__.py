@@ -38,6 +38,15 @@ def main():
     clock = pygame.time.Clock()
     fps = constants.FPS
     timer = 0
+    
+    #create a text file for best time
+     
+    with open("besttime.txt", "a") as f_init:
+        f_init.close()
+    
+    with open("besttime.txt", "r") as f_rinit:
+        best_time = f_rinit.read()
+        f_rinit.close()
 
     # Clock to keep track key press interval
     key_press_clock = pygame.time.Clock()
@@ -105,9 +114,16 @@ def main():
 
     timer_text = TextBlock(
         timer,
-        pygame.rect.Rect((constants.APP_WIDTH - 400)/ 2, 0, 400, 200),
+        pygame.rect.Rect((constants.APP_WIDTH - 400) / 2, 0, 400, 200),
         font_large,
         TextPosition.CENTER
+    )
+
+    best_time_text = TextBlock(
+        "Best time: " + str(best_time),
+        pygame.rect.Rect(300, 0, 200, 100),
+        font,
+        TextPosition.RIGHT
     )
 
     def restart_game():
@@ -200,6 +216,22 @@ def main():
             final_score_text.hidden = False
             start_btn.text = "Retry"
             start_btn.hidden = False
+
+            #count best time
+            current_time = round(timer, 3)
+
+            if best_time == "":
+                best_time = current_time
+                with open("besttime.txt", "w") as f_write_time:
+                    f_write_time.write(str(best_time))
+                f_write_time.close()
+            elif current_time < float(best_time):
+                best_time = current_time
+                with open("besttime.txt", "w") as f_write_time:
+                    f_write_time.write(str(current_time))
+                f_write_time.close()
+        
+            best_time_text.text = "Best time: " + str(best_time) + "s"
 
         # Reference: http://thepythongamebook.com/en:pygame:step014
         ms = clock.tick(fps)
