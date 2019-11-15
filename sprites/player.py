@@ -26,15 +26,23 @@ class Player(pygame.sprite.Sprite):
         self.idle_index = 0
         self.idle_frames = []
         for i in range(10):
-            self.idle_frames.append(pygame.transform.scale(
-                pygame.image.load(f"images/player/Idle ({i + 1}).png"), rect.size))
+            self.idle_frames.append(
+                pygame.transform.scale(
+                    pygame.image.load(f"images/player/Idle ({i + 1}).png"),
+                    rect.size
+                )
+            )
 
         # Load attack frames
         self.attack_index = 0
         self.attack_frames = []
         for i in range(10):
-            self.attack_frames.append(pygame.transform.scale(
-                pygame.image.load(f"images/player/Attack ({i + 1}).png"), rect.size))
+            self.attack_frames.append(
+                pygame.transform.scale(
+                    pygame.image.load(f"images/player/Attack ({i + 1}).png"),
+                    rect.size
+                )
+            )
 
         # Render the image on first frame
         self._update_image()
