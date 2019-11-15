@@ -4,13 +4,13 @@ Uni programming project
 
 ## Getting started
 
-1. Install `pipenv`.
+1. Install `pipenv` (Used for dependency management).
 
 ```bash
 $ pip install pipenv
 ```
 
-2. Install dependencies (Choose either commands).
+2. Install dependencies.
 
 ```bash
 # Install default dependencies
@@ -40,7 +40,7 @@ $ pipenv shell
 
 ## Development
 
-The project uses `pylint` for linting and `autopep8` for formatting.
+The project uses `pylint` for linting, `autopep8` and `rope` for formatting. Run `pipenv install --dev` to install these.
 
 ## License
 
