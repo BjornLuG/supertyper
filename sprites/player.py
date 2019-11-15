@@ -51,7 +51,10 @@ class Player(pygame.sprite.Sprite):
         self.state = "attack"
 
     def increase_damage(self):
-        self.current_extra_damage = min(self.current_extra_damage + self.extra_damage, self.max_extra_damage)
+        self.current_extra_damage = min(
+            self.current_extra_damage + self.extra_damage,
+            self.max_extra_damage
+        )
 
     def reset_damage(self):
         self.current_damage = self.damage
@@ -62,7 +65,7 @@ class Player(pygame.sprite.Sprite):
             self.image = self.attack_frames[self.attack_index]
             self.attack_index = (self.attack_index + 1) % len(self.attack_frames)
 
-            # Once attack done, execute attack callback and return to idle 
+            # Once attack done, execute attack callback and return to idle
             if self.attack_index <= 0:
                 # Send attack callback
                 self.attack_callback(self.damage + self.current_extra_damage)

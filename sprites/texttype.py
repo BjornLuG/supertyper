@@ -85,3 +85,9 @@ class TextType(pygame.sprite.Sprite):
             # Slice text to be used in next line
             cache_text = cache_text[i:]
             current_index += i
+
+    def get_current_char(self):
+        return self.text[self.type_index]
+
+    def is_exceed_text(self):
+        return self.type_index >= len(self.text)

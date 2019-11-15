@@ -6,6 +6,7 @@ class TextPosition:
     RIGHT = 2
     CENTER = 4
 
+
 class TextBlock(pygame.sprite.Sprite):
     def __init__(self, text, rect, font, position=TextPosition.LEFT, antialias=False, color=(255, 255, 255), bgcolor=None):
         # Init sprite groups
