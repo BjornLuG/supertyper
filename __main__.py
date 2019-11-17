@@ -47,6 +47,9 @@ def main():
     # Here is where player actually deal damage
     p.setup_player_enemy_interaction(o.player, o.enemy, o.enemy_hp_bar)
 
+    # Show menu screen
+    o.show_menu_gui()
+
     while running:
         ms = clock.tick(c.FPS)
 

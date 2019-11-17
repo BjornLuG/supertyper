@@ -102,8 +102,8 @@ def setup_sprites(best_time, restart_game):
 
     global best_time_text
     best_time_text = TextBlock(
-        "Best time: " + str(best_time) + "s",
-        pygame.rect.Rect(300, 0, 200, 100),
+        ("Best time: " + str(best_time) + "s") if best_time else "",
+        pygame.rect.Rect((c.APP_WIDTH - 200), 0, 200, 100),
         font_medium,
         TextPosition.RIGHT
     )
@@ -175,12 +175,14 @@ def show_menu_gui():
     end_game_text.hidden = False
     final_score_text.hidden = False
     start_btn.hidden = False
+    timer_text.hidden = True
 
 
 def hide_menu_gui():
     end_game_text.hidden = True
     final_score_text.hidden = True
     start_btn.hidden = True
+    timer_text.hidden = False
 
 
 def set_best_time(time):
