@@ -56,7 +56,7 @@ def main():
         all_events = pygame.event.get()
 
         # Check enter press
-        if not is_playing and i.get_is_enter(all_events):
+        if not is_playing and i.is_keydown_start_game(all_events):
             restart_game()
 
         if is_playing:

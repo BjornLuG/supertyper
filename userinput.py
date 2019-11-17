@@ -30,10 +30,10 @@ def get_keydown_unicodes(all_events):
     return unicodes
 
 
-def get_is_enter(all_events):
-    """Key down enter (For start game)"""
+def is_keydown_start_game(all_events):
+    """Key down enter or space (For start game)"""
     for event in all_events:
-        if event.type == pygame.KEYDOWN and event.key == pygame.K_RETURN:
+        if event.type == pygame.KEYDOWN and (event.key == pygame.K_RETURN or event.key == pygame.K_SPACE):
             return True
 
     return False
