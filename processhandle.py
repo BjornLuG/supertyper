@@ -11,12 +11,17 @@ def get_all_texts():
         with open(c.text_file_name, "r") as f:
             return json.load(f)
     except:
-        return ""
+        return ["Text file not generated. Type this instead :)"]
 
 
 def get_text(all_texts):
     """Get one text from all texts and remove it from the list (Mutates list)"""
-    return all_texts.pop(int(random.random() * len(all_texts)))
+    text = all_texts.pop(int(random.random() * len(all_texts)))
+
+    if len(all_texts) <= 0:
+        all_texts.extend(get_all_texts())
+
+    return text
 
 
 def get_best_time():
