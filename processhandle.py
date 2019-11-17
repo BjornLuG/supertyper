@@ -1,4 +1,4 @@
-# Handles various process in game
+# Handles various processes in game
 
 import random
 import json
@@ -6,12 +6,16 @@ import constants as c
 
 
 def get_all_texts():
-    with open(c.text_file_name) as f:
-        return json.load(f)
+    """Retrieve texts from JSON"""
+    try:
+        with open(c.text_file_name, "r") as f:
+            return json.load(f)
+    except:
+        return ""
 
 
 def get_text(all_texts):
-    """Get one text from all texts and remove it from the list"""
+    """Get one text from all texts and remove it from the list (Mutates list)"""
     return all_texts.pop(int(random.random() * len(all_texts)))
 
 
@@ -24,6 +28,7 @@ def get_best_time():
 
 
 def compare_best_time(current_time):
+    """Compare best time, and if so saves best time to txt file"""
     best_time = get_best_time()
 
     if best_time == "" or float(current_time) < float(best_time):
@@ -47,5 +52,6 @@ def setup_player_enemy_interaction(player, enemy, enemy_hp_bar):
 
 
 def reset_state(player, enemy):
+    """Reset player damage and enemy health (For restart game)"""
     player.reset_damage()
     enemy.current_health = c.ENEMY_HEALTH

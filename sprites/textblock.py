@@ -38,7 +38,7 @@ class TextBlock(pygame.sprite.Sprite):
         self.image.fill((0, 0, 0))
 
         # Get total possible font height
-        font_height = self.font.size('Bj')[1]
+        font_height = self.font.size("Bj")[1]
         # Copy text, will be sliced later
         cache_text = str(self.text)
         # Current line y position

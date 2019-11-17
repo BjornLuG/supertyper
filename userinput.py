@@ -1,4 +1,4 @@
-# Manages all events from pygame, technically an event is an input
+# Manages all events from pygame, technically an event is an input :)
 
 import pygame
 
@@ -31,6 +31,7 @@ def get_keydown_unicodes(all_events):
 
 
 def get_is_enter(all_events):
+    """Key down enter (For start game)"""
     for event in all_events:
         if event.type == pygame.KEYDOWN and event.key == pygame.K_RETURN:
             return True

@@ -102,7 +102,7 @@ def setup_sprites(best_time, restart_game):
 
     global best_time_text
     best_time_text = TextBlock(
-        "Best time: " + str(best_time) + 's',
+        "Best time: " + str(best_time) + "s",
         pygame.rect.Rect(300, 0, 200, 100),
         font_medium,
         TextPosition.RIGHT
@@ -171,10 +171,6 @@ def show_end_game(time):
     show_menu_gui()
 
 
-def set_best_time(time):
-    best_time_text.text = "Best time: " + str(round(time, 3)) + "s"
-
-
 def show_menu_gui():
     end_game_text.hidden = False
     final_score_text.hidden = False
@@ -185,6 +181,10 @@ def hide_menu_gui():
     end_game_text.hidden = True
     final_score_text.hidden = True
     start_btn.hidden = True
+
+
+def set_best_time(time):
+    best_time_text.text = "Best time: " + str(round(time, 3)) + "s"
 
 
 def set_timer_text(text):
@@ -204,6 +204,7 @@ def increment_current_type_index():
 
 
 def reset_state(new_text):
+    """Reset sprite state (For restart game)"""
     # Set display text
     set_current_type_text(new_text)
     # Reset type index
