@@ -11,7 +11,7 @@ def get_all_texts():
         with open(c.text_file_name, "r") as f:
             return json.load(f)
     except:
-        return ["Text file not generated. Type this instead :)"]
+        return ["texts.json doesn't exist. Run reqtexts.py first."]
 
 
 def get_text(all_texts):
